@@ -1,0 +1,45 @@
+﻿@model List<Topic>
+@{
+    ViewBag.Title = "Page d'accueil";
+    var Statistiques = ViewBag.Statistics as Tuple<int, int, int>;
+}
+
+<h1 class="page-header">Gestionnaire du site</h1>
+
+<div class="row placeholders">
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h4>@Statistiques.Item2</h4>
+        <span class="text-muted">Nombre de sujets</span>
+    </div>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h4>@Statistiques.Item3</h4>
+        <span class="text-muted">Nombre de réponses</span>
+    </div>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h4>@Statistiques.Item1</h4>
+        <span class="text-muted">Nombre d'utilisateurs</span>
+    </div>
+</div>
+
+<h2 class="sub-header">Liste des derniers sujets</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sujet</th>
+                <th>Date de publication</th>
+                <th>Nombre de réponses</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.CreateOn</td>
+                    <td>@item.ReplyCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

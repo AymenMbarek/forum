@@ -1,0 +1,60 @@
+﻿@model TopicNode
+
+@{
+    ViewData["Title"] = "Ajouter un nœud";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Ajouter un nœud</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Nœud de sujet</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Alias du nœud</label>
+            <div class="col-md-10">
+                <input asp-for="NodeName" class="form-control" />
+                <span asp-validation-for="NodeName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Order" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Order" class="form-control" value="0" />
+                <span asp-validation-for="Order" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ParentId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ParentId" class="form-control" readonly="readonly" value="@ViewBag.ParentId" />
+                <span asp-validation-for="ParentId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ajouter" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Retour à la liste</a>
+</div>

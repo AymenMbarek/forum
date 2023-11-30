@@ -1,0 +1,42 @@
+﻿@model List<TopicReply>
+@{
+    Layout = "";
+}
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    var item = Model[i];
+    <div class="réponse" data-id="@item.Id" id="réponse_@item.Id">
+        <div class="info">
+            <span class="nom">
+                <a href="#">@item.ReplyEmail</a>
+            </span> ·
+            <span class="heure">
+                <a class="étage-de-réponse" href="#">#@(i + 1)</a> · <abbr class="timeago">@item.CreateOn.ToString("MM-dd HH:mm")</abbr>
+            </span>
+            <span class="options pull-right">
+                <a data-id="@item.Id" href="#" class="supprimer">Supprimer</a>
+            </span>
+        </div>
+        <div class="markdown">
+            <p>@item.ReplyContent</p>
+        </div>
+    </div>
+}
+<script>
+    $(".markdown p").each(function () {
+        var c = $(this).html();
+        $(this).html(markdown.toHTML(c));
+    });
+    $(".supprimer").on("click", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "/Admin/TopicReplies/Delete",
+            data: { id: id },
+            success: function (data, status) {
+                if (status == "nocontent")
+                    $("#réponse_" + id).hide();
+            }
+        });
+    });
+</script>

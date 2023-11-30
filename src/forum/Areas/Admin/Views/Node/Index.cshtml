@@ -1,0 +1,94 @@
+﻿@model IEnumerable<TopicNode>
+
+@{
+    ViewData["Title"] = "Gestion des nœuds";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Gestion des nœuds</h2>
+
+<p>
+    <a asp-action="Créer" asp-route-parentid="0">Créer un nœud parent</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nom
+            </th>
+            <th>
+                Alias du nœud
+            </th>
+            <th>
+                Ordre
+            </th>
+            <th>
+                Nœud parent
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Date de création
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(r => r.ParentId == 0).OrderBy(r => r.Order))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NodeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateOn)
+                </td>
+                <td>
+                    <a asp-action="Créer" asp-route-parentid="@item.Id">Créer un nœud enfant</a>|
+                    <a asp-action="Modifier" asp-route-id="@item.Id">Modifier</a> |
+                    <a asp-action="Supprimer" asp-route-id="@item.Id">Supprimer</a>
+                </td>
+            </tr>
+            foreach (var node in Model.Where(r => r.ParentId == item.Id).OrderBy(r => r.Order))
+            {
+                <tr>
+                    <td>
+                        -->@Html.DisplayFor(modelItem => node.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => node.NodeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => node.Order)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => node.ParentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => node.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => node.CreateOn)
+                    </td>
+                    <td>
+                        <a asp-action="Modifier" asp-route-id="@node.Id">Modifier</a> |
+                        <a asp-action="Supprimer" asp-route-id="@node.Id">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

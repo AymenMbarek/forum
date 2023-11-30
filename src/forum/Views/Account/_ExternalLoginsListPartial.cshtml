@@ -1,0 +1,27 @@
+﻿@inject SignInManager<User> SignInManager
+<h4>Connectez-vous avec un compte sur une autre plateforme</h4>
+<hr />
+@{
+    var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
+    if (!loginProviders.Any())
+    {
+        <div>
+            <p>
+                Besoin d'ajouter d'autres plates-formes
+            </p>
+        </div>
+    }
+    else
+    {
+        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+            <div id="socialLoginList">
+                <p>
+                    @foreach (var p in loginProviders)
+                    {
+                        <button type="submit" class="btn btn-default" id="@p.Name" name="provider" value="@p.Name" title="utiliser @p.DisplayName Se connecter">@p.Name</button>
+                    }
+                </p>
+            </div>
+        </form>
+    }
+}
